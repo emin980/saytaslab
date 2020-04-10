@@ -1,0 +1,63 @@
+------------------------------------------------------------------------------------------------
+------------------------------- 3-Bit Nand Gate VHDL CODE-------------------------------
+Library IEEE;
+use IEEE.std_logic_1164.all;
+
+Entity uc_bit_nand is
+Port( q1: in std_logic;
+q2: in std_logic;
+q3: in std_logic;
+z: out std_logic);
+end uc_bit_nand;
+
+architecture behv of uc_bit_nand is
+begin
+z<=not (q1 and q2 and q3);
+end behv;
+
+------------------------------------------------------------------------------------------------
+------------------------------- Washing Machine VHDL CODE -------------------------------
+Library IEEE;
+use IEEE.std_logic_1164.all;
+
+entity camasirmak is
+Port(t:in std_logic;
+q1:in  std_logic_vector(1 downto 0);
+z:out std_logic);
+end camasirmak;
+
+architecture Behv of camasirmak is
+Type camasirdurumlar is(basla,yika,durula,sikma);
+Signal simdikidurum: camasirdurumlar:=basla;
+Begin 
+Process(t)
+Begin
+If(rising_edge(t)) then
+
+case simdikidurum is
+when basla=>
+if(q1="00") then
+z<='0';simdikidurum<=yika;
+elsif(q1="01") then
+z<='0';simdikidurum<=durula;
+elsif(q1="10") then
+z<='0';simdikidurum<=sikma;
+end if;
+
+when yika=>
+if(q1="01") then
+z<='0';simdikidurum<=durula;
+end if;
+
+when durula=>
+if(q1="10") then
+z<='0';simdikidurum<=sikma;
+end if;
+when sikma=>
+z<='1';
+end case;
+end if;
+end process;
+end behv;
+
+------------------------------------------------------------------------------------------------
